@@ -1,0 +1,27 @@
+- name: Mount Samba share on Ubuntu client
+  hosts: u22c  # 클라이언트 호스트 그룹
+  become: yes  # 관리자 권한으로 실행
+  tasks:
+    # 1. cifs-utils 패키지 설치 (Samba 공유 마운트를 위해 필요)
+    - name: Install cifs-utils
+      apt:
+        name: cifs-utils
+        state: present
+        update_cache: yes
+
+    # 2. 마운트 포인트 디렉토리 생성
+    - name: Create mount point directory
+      file:
+        path: /dir2
+        state: directory
+        mode: '0777'
+
+    # 3. Samba 공유 마운트 (자동으로 /etc/fstab에 추가됨)
+    - name: Mount Samba share
+      mount:
+        path: /dir2
+        src: "//192.168.20.1/humans"  # Samba 서버의 공유 경로
+        fstype: cifs
+        opts: "username=user1,password=123456,uid=1000,gid=1000,file_mode=0777,dir_mode=0777"
+        state: mounted
+
