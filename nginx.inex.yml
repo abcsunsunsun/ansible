@@ -1,0 +1,26 @@
+- name: Install Nginx on Amazon Linux 2023
+  hosts: aws_ec2
+  become: yes
+  tasks:
+    - name: Update yum cache
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create index.html with "hello" content
+      copy:
+        dest: /usr/share/nginx/html/index.html
+        content: "hello"
+        mode: '0644'
+
