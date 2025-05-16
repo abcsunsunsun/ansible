@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>키워드 관리</title>
+</head>
+<body>
+    <h2>키워드 등록</h2>
+    <form method="post" th:action="@{/keywords}">
+        <input type="text" name="keyword" placeholder="키워드 입력" required>
+        <button type="submit">등록</button>
+    </form>
+    <h2>등록된 키워드 목록</h2>
+    <ul>
+        <li th:each="k : ${keywords}">
+            <a th:href="@{'/news/' + ${k.id}}" th:text="${k.keyword}"></a>
+        </li>
+    </ul>
+</body>
+</html>

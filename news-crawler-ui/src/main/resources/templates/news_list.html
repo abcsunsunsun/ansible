@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>뉴스 목록</title>
+</head>
+<body>
+    <h2>키워드 관련 뉴스 목록</h2>
+    <ul>
+        <li th:each="news : ${newsList}">
+            <a th:href="${news.link}" th:text="${news.title}" target="_blank"></a>
+            <span th:text="${news.newspaper}"></span>
+            <span th:text="${news.pubDate}"></span>
+        </li>
+    </ul>
+    <a href="/keywords">← 키워드 목록으로</a>
+</body>
+</html>
